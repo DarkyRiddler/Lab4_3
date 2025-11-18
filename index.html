@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokebook App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .joke {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: white;
+            border-left: 4px solid #28a745;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎭 Jokebook Application</h1>
+    
+    <!-- Sekcja Kategorie -->
+    <div class="section">
+        <h2>📋 Kategorie Żartów</h2>
+        <p>Pobierz listę wszystkich dostępnych kategorii żartów:</p>
+        <a href="http://localhost:3000/jokebook/categories" target="_blank">
+            <button>Pobierz Kategorie</button>
+        </a>
+    </div>
+
+    <!-- Sekcja Żarty z Kategorii -->
+    <div class="section">
+        <h2>😄 Żarty z Kategorii</h2>
+        <p>Wybierz kategorię żartów do pobrania:</p>
+        <a href="http://localhost:3000/jokebook/joke/funnyJoke" target="_blank">
+            <button>Pobierz Żart (Funny)</button>
+        </a>
+        <a href="http://localhost:3000/jokebook/joke/lameJoke" target="_blank">
+            <button>Pobierz Żart (Lame)</button>
+        </a>
+    </div>
+
+    <!-- Sekcja Matematyka - Koło -->
+    <div class="section">
+        <h2>🔵 Obliczenia Koła</h2>
+        <p>Oblicz pole i obwód koła dla różnych promieni:</p>
+        <a href="http://localhost:3000/math/circle/3" target="_blank">
+            <button>Koło (r=3)</button>
+        </a>
+        <a href="http://localhost:3000/math/circle/5" target="_blank">
+            <button>Koło (r=5)</button>
+        </a>
+        <a href="http://localhost:3000/math/circle/10" target="_blank">
+            <button>Koło (r=10)</button>
+        </a>
+    </div>
+
+    <!-- Sekcja Matematyka - Prostokąt -->
+    <div class="section">
+        <h2>📐 Obliczenia Prostokąta</h2>
+        <p>Oblicz pole i obwód prostokąta:</p>
+        <a href="http://localhost:3000/math/rectangle/2/3" target="_blank">
+            <button>Prostokąt (2x3)</button>
+        </a>
+        <a href="http://localhost:3000/math/rectangle/4/5" target="_blank">
+            <button>Prostokąt (4x5)</button>
+        </a>
+        <a href="http://localhost:3000/math/rectangle/6/8" target="_blank">
+            <button>Prostokąt (6x8)</button>
+        </a>
+    </div>
+
+    <!-- Sekcja Matematyka - Potęgi -->
+    <div class="section">
+        <h2>⚡ Obliczenia Potęg</h2>
+        <p>Oblicz potęgi i pierwiastki:</p>
+        <a href="http://localhost:3000/math/power/2/3" target="_blank">
+            <button>2³ (bez pierwiastka)</button>
+        </a>
+        <a href="http://localhost:3000/math/power/9/2?root=true" target="_blank">
+            <button>9² + √9</button>
+        </a>
+        <a href="http://localhost:3000/math/power/4/3?root=true" target="_blank">
+            <button>4³ + √4</button>
+        </a>
+    </div>
+
+    <!-- Sekcja Instrukcje -->
+    <div class="section">
+        <h2>ℹ️ Instrukcje</h2>
+        <div class="result">
+            <p><strong>Jak korzystać z aplikacji:</strong></p>
+            <ul>
+                <li>Kliknij dowolny przycisk aby otworzyć endpoint w nowej karcie</li>
+                <li>Wyniki będą wyświetlane w formacie JSON</li>
+                <li>Serwer działa na: <code>http://localhost:3000</code></li>
+                <li><strong>Upewnij się, że backend jest uruchomiony!</strong></li>
+            </ul>
+            
+            <p><strong>Przykładowe endpointy:</strong></p>
+            <ul>
+                <li><code>GET /jokebook/categories</code> - lista kategorii</li>
+                <li><code>GET /jokebook/joke/funnyJoke</code> - losowy żart</li>
+                <li><code>GET /math/circle/5</code> - obliczenia koła</li>
+                <li><code>GET /math/rectangle/4/5</code> - obliczenia prostokąta</li>
+                <li><code>GET /math/power/2/3</code> - obliczenia potęg</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
