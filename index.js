@@ -53,6 +53,44 @@ let lameJoke = [
   }
 
 ];
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
+
+app.post('/jokebook/joke/new', (req, res) => {
+  const { category, joke, response } = req.body;
+  
+  if (!category || !joke || !response) {
+    return res.status(400).json({ error: 'Missing required fields: category, joke, response' });
+  }
+  
+  if (!categories.includes(category)) {
+    return res.status(400).json({ error: `Category '${category}' does not exist` });
+  }
+  
+  const newJoke = { joke, response };
+  
+  switch(category) {
+    case 'funnyJoke':
+      funnyJoke.push(newJoke);
+      break;
+    case 'lameJoke':
+      lameJoke.push(newJoke);
+      break;
+    default:
+      return res.status(400).json({ error: `Category '${category}' not supported` });
+  }
+  
+  res.json({ 
+    message: 'Joke added successfully',
+    joke: newJoke,
+    category: category
+  });
+});
 
 // ZAD 2
 app.get('/jokebook/categories', (req, res) => {

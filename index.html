@@ -47,6 +47,19 @@
             border-bottom: 2px solid #007bff;
             padding-bottom: 10px;
         }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +84,33 @@
         <a href="http://localhost:3000/jokebook/joke/lameJoke" target="_blank">
             <button>Pobierz Żart (Lame)</button>
         </a>
+    </div>
+
+    <!-- Sekcja Dodawanie Nowych Żartów -->
+    <div class="section">
+        <h2>➕ Dodaj Nowy Żart</h2>
+        <p>Dodaj nowy żart do istniejącej kategorii:</p>
+        
+        <form id="addJokeForm">
+            <label for="category">Kategoria:</label>
+            <select id="category" name="category" required>
+                <option value="">Wybierz kategorię</option>
+                <option value="funnyJoke">Funny Joke</option>
+                <option value="lameJoke">Lame Joke</option>
+            </select>
+            
+            <label for="joke">Żart:</label>
+            <textarea id="joke" name="joke" required placeholder="Wpisz treść żartu..." rows="3"></textarea>
+            
+            <label for="response">Odpowiedź:</label>
+            <textarea id="response" name="response" required placeholder="Wpisz odpowiedź/punchline..." rows="2"></textarea>
+            
+            <button type="submit" style="background-color: #28a745; margin-top: 15px;">
+                Dodaj Żart
+            </button>
+        </form>
+        
+        <div id="formResult" style="margin-top: 15px;"></div>
     </div>
 
     <!-- Sekcja Matematyka - Koło -->
@@ -126,20 +166,63 @@
             <ul>
                 <li>Kliknij dowolny przycisk aby otworzyć endpoint w nowej karcie</li>
                 <li>Wyniki będą wyświetlane w formacie JSON</li>
-                <li>Serwer działa na: <code>http://localhost:3000</code></li>
-                <li><strong>Upewnij się, że backend jest uruchomiony!</strong></li>
-            </ul>
-            
-            <p><strong>Przykładowe endpointy:</strong></p>
-            <ul>
-                <li><code>GET /jokebook/categories</code> - lista kategorii</li>
-                <li><code>GET /jokebook/joke/funnyJoke</code> - losowy żart</li>
-                <li><code>GET /math/circle/5</code> - obliczenia koła</li>
-                <li><code>GET /math/rectangle/4/5</code> - obliczenia prostokąta</li>
-                <li><code>GET /math/power/2/3</code> - obliczenia potęg</li>
+                <li><strong>Frontend:</strong> <code>http://localhost:8080</code></li>
+                <li><strong>Backend:</strong> <code>http://localhost:3000</code></li>
+                <li><strong>Upewnij się, że oba serwery są uruchomione!</strong></li>
             </ul>
         </div>
     </div>
 
+    <script>
+        document.getElementById('addJokeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                category: document.getElementById('category').value,
+                joke: document.getElementById('joke').value,
+                response: document.getElementById('response').value
+            };
+            
+            const resultDiv = document.getElementById('formResult');
+            
+            try {
+                const response = await fetch('http://localhost:3000/jokebook/joke/new', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; border: 1px solid #c3e6cb;">
+                            <strong>✅ Sukces!</strong> Żart został dodany pomyślnie.<br>
+                            <strong>Kategoria:</strong> ${data.category}<br>
+                            <strong>Żart:</strong> ${data.joke.joke}<br>
+                            <strong>Odpowiedź:</strong> ${data.joke.response}
+                        </div>
+                    `;
+                    // Wyczyść formularz po sukcesie
+                    document.getElementById('addJokeForm').reset();
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; border: 1px solid #f5c6cb;">
+                            <strong>❌ Błąd:</strong> ${data.error}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; border: 1px solid #f5c6cb;">
+                        <strong>❌ Błąd połączenia:</strong> ${error.message}<br>
+                        Upewnij się, że backend jest uruchomiony na localhost:3000
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
